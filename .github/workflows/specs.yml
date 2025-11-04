@@ -1,0 +1,73 @@
+name: All Specs
+
+# workflow_dispatch allows you to manually trigger this workflow.
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+jobs:
+  # TODO: Environment variables?
+  build:
+    # Don't create two builds on open PRs
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    permissions:
+      # To comment on PRs
+      pull-requests: write
+      # To retrieve test step time in GitHub Action
+      contents: read
+      # To retrieve previous report for default branch, which is saved as GitHub Action Artifacts
+      actions: read
+    runs-on: '${{ matrix.os }}'
+    continue-on-error: true
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+    env:
+      RAILS_ENV: test
+      RUBY_ENV: test
+      DISPLAY: ':99' # For chromedriver
+      # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      # REDIS_URL: redis://localhost:6379/0
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - run: npm install
+      - run: bundle exec rails db:test:prepare
+      - run: bundle exec rails db:setup
+      - name: Precompile CSS and JavaScript
+        run: bundle exec rails assets:precompile
+      - name: Rspec Tests
+        run: bundle exec rspec
+      - name: Cucumber
+        run: bundle exec cucumber
+      - name: Accessibility Features
+        run: bundle exec cucumber --profile a11y
+      - name: Code Coverage Reports
+        uses: k1LoW/octocov-action@v1
+      # This is a similar coverage commenter, but is less reliable.
+      - name: Add code coverage comment
+        uses: romeovs/lcov-reporter-action@master
+        with:
+          lcov-file: ./coverage/lcov/actionmap.lcov
+          github-token: ${{ github.token }}
+      - name: Keep screenshots from integration tests
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/capybara
+          if-no-files-found: ignore
+      - name: Keep code coverage reports
+        uses: actions/upload-artifact@v5
+        if: success()
+        with:
+          name: coverage
+          path: ${{ github.workspace }}/coverage/
+          if-no-files-found: ignore

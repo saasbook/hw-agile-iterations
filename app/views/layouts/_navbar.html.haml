@@ -1,0 +1,24 @@
+// A Bootstrap Navbar
+// https://getbootstrap.com/docs/5.3/components/navbar/
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.border-bottom.border-body.px-4#ci-navbar
+  .container-fluid
+    %a.navbar-brand{ href: root_path } ActionMap
+    %button.navbar-toggler{'aria-controls': 'navbar-links-container', 'aria-expanded': 'false',
+                           'aria-label': 'Toggle navigation', 'data-bs-target': '#navbar-links-container',
+                           'data-bs-toggle': 'collapse', type: 'button'}
+      %span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbar-links-container
+      .me-auto
+        %ul.navbar-nav
+          - ApplicationHelper.nav_items.each do |item|
+            %li.nav-item.text-center{ class: ApplicationHelper.active(controller_name, item[:link]) }
+              = nav_link(item[:title], item[:link], current_page?(item[:link]))
+      %ul.navbar-nav
+        - if current_user.present?
+          %li.nav-item.text-center{ class: ApplicationHelper.active(controller_name, user_profile_path) }
+            = nav_link('Profile', user_profile_path, current_page?(user_profile_path))
+          %li.nav-item.text-center{ class: ApplicationHelper.active(controller_name, logout_path) }
+            = nav_link('Logout', logout_path, false)
+        - else
+          %li.nav-item.text-center{ class: ApplicationHelper.active(controller_name, login_path) }
+            = nav_link('Login', login_path, current_page?(login_path))

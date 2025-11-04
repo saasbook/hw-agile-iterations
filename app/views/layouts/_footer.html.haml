@@ -1,0 +1,29 @@
+%footer.container-fluid
+  %h2.visually-hidden Footer
+  .pt-4.my-md-5.pt-md-5
+    .row
+      .col-6.col-md-3.offset-md-3.text-center
+        %h3.h5 Data Sources
+        %ul.list-unstyled.text-small
+          %li
+            %a{href:   'https://developers.google.com/civic-information',
+               target: :_blank} Google Civic Information
+          %li
+            %a{href:   'https://www.census.gov/data.html',
+               target: :_blank} Census.gov
+      .col-6.col-md-3.text-center
+        %h3.h5 API Resources
+        %ul.list-unstyled.text-small
+          %li
+            %a{href:   'https://gnews.io/',
+               target: :_blank} Google News API
+          %li
+            %a{href:   'https://www.propublica.org/datastore/apis',
+               target: :_blank} ProPublica
+    .row
+      .col-12.col-md-4.offset-md-4.text-center
+        %small.d-block.mb-3
+          %a{ href: 'http://www.saasbook.info/', target: :_blank }
+            Engineering Software as a Service
+      .col-12.col-md-4.offset-md-4.text-center
+        %small.d-block.mb-3 © #{Time.zone.now.year}

@@ -1,0 +1,35 @@
+# Report SimpleCov coverage on GitHub PRs and workflows
+# See k1LoW/octocov-action on GitHub
+coverage:
+  badge:
+    path: docs/coverage.svg
+  paths:
+    # Auto-summed file
+    - coverage/lcov/actionmap.info
+    # Individual file reports
+    - coverage/lcov/*.cov
+codeToTestRatio:
+  code:
+    - 'app/**/*.rb'
+    - '!app/**/*.js'
+  test:
+    - 'spec/**/*_spec.rb'
+    - 'features/**/*.feature'
+    - 'features/**/*_steps.rb'
+testExecutionTime:
+  if: true
+diff:
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
+# Enable this block to add comments to PRs.
+comment:
+  if: is_pull_request
+# Updaate the body of the PR
+body:
+  if: is_pull_request
+# Also add to the workflow summary
+summary:
+report:
+  if: is_default_branch
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}

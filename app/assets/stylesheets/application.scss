@@ -1,0 +1,26 @@
+// This file is compiled by dart-sass
+// SASS (notably, not SaaS) is a CSS compilier that gives us
+// native features like nesting CSS elments and including other files.
+// You don't need to know SASS, but it might be interesting to review:
+// https://sass-lang.com
+
+// This imports the bootstrap CSS framework.
+// htttps://getbootstrap.com
+@use 'bootstrap/scss/bootstrap';
+@use 'bootstrap-icons/font/bootstrap-icons';
+@use '@fortawesome/fontawesome-free/scss/fontawesome';
+@use '@fortawesome/fontawesome-free/scss/solid';
+// Kind of a lot just for Google and GitHub icons...
+@use '@fortawesome/fontawesome-free/scss/brands';
+
+// We recommend you add your own customizations to these files
+// Or create new files under app/assets/stylesheets.
+// If you add a new file, you'll need to include it here.
+@use './main.scss';
+@use './map.scss';
+
+// You can also add CSS down here, but it's a best practice to keep it in a file.
+
+button i {
+  padding: 0 2px;
+}

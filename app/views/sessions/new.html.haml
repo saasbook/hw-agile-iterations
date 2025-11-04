@@ -1,0 +1,25 @@
+.row
+  .col-sm-9.col-md-7.col-lg-5.mx-auto
+    .card.card-signin.my-5
+      .card-body
+        %h1.d-block.display-4.card-title.text-center Sign In
+        .alert.alert-primary.text-center
+          Select an authentication provider below to login.
+        .d-grid.gap-2.col-6.mx-auto
+          - if login_enabled?('developer')
+            = form_tag auth_provider_path('developer'), method: :post, data: { turbo: false } do
+              %button.btn.btn-lg.bg-secondary.text-white{ type: :submit }
+                %i.fas.fa-code.mr-2
+                Developer Login
+
+          - if login_enabled?('google')
+            = form_tag auth_provider_path('google'), method: :post, data: { turbo: false } do
+              %button.btn.btn-lg.bg-danger.text-white{ type: :submit }
+                %i.fab.fa-google.mr-2
+                Google Login
+
+          - if login_enabled?('github')
+            = form_tag auth_provider_path('github'), method: :post, data: { turbo: false } do
+              %button.btn.btn-lg.bg-dark.text-white{ type: :submit }
+                %i.fab.fa-github.mr-2
+                GitHub Login

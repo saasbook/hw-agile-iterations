@@ -1,0 +1,9 @@
+.container-fluid
+  .row
+    .col-md-8.offset-md-2
+      %h1
+        Search Results
+        %small "#{@search_term}"
+  .row
+    .col-12.col-md-10.offset-md-1
+      = render 'representatives/table', representatives: @representatives

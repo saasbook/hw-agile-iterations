@@ -1,0 +1,24 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv': 'Content-Type' }/
+    %meta{ content: 'width=device-width, initial-scale=1.0, shrink-to-fit=no', name: 'viewport' }/
+    - if content_for?(:page_title)
+      %title "#{yield(:page_title)} | ActionMap"
+    - else
+      %title ActionMap
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application', defer: true
+
+  %body.min-vh-100.bg-dark
+    = render 'layouts/navbar'
+    %main.container-fluid.bg-light
+      - if flash[:notice].present? || flash[:alert].present?
+        -# Use these #ci- HTML ids to aid in writing integration tests.
+        .row.my-4#ci-actionmap-flash-container
+          .col-12.text-center
+            = render 'shared/flash_messages'
+      = yield
+    = render 'layouts/footer'

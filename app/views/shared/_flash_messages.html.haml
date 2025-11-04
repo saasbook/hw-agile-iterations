@@ -1,0 +1,8 @@
+-# Use these #ci- HTML ids to aid in writing integration tests.
+#ci-actionmap-flash-messages
+  - if flash[:notice]
+    .alert.alert-info
+      = flash[:notice]
+  - if flash[:alert]
+    .alert.alert-danger
+      = flash[:alert]

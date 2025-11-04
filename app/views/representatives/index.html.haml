@@ -1,0 +1,17 @@
+.row
+  .col-12
+    %h1.text-center Search for a Representative
+
+  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+    = form_tag search_representatives_path, method: :get do
+      .form-group.row
+        .col-md-4
+          %label.col-form-label{ for: 'address-input' }
+            Enter a location:
+        .col-md-8
+          = text_field_tag(:address, nil, id: 'address-input', class: 'form-control')
+      .row
+        %p You may use a full address, county name, or zip code.
+
+      .actions
+        = submit_tag 'Search', class: 'btn btn-primary'

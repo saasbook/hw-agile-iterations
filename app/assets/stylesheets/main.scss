@@ -1,0 +1,102 @@
+main {
+  // Just to give some spacing on smaller pages.
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 400px);
+}
+
+footer {
+  background-color: var(--bs-dark);
+  color: #FFF;
+
+  li a, small a {
+    color: #CCC;
+  }
+}
+
+path {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: .5px;
+}
+
+nav.navbar,
+nav.navbar li a,
+nav.navbar li a:visited {
+  color: #FFF;
+}
+
+nav.navbar .bg-primary-active {
+  background-color: #FFF;
+  border: 1px solid var(--bs-primary-text-emphasis);
+  border-radius: 4px;
+  color: var(--bs-blue);
+
+  a, a:active, a:visited {
+    color: var(--bs-blue)
+  }
+}
+
+.map-container {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.field_with_errors {
+    color: red;
+}
+
+pre {
+  background-color: #eee;
+}
+
+
+th {
+  padding-bottom: 5px;
+}
+
+td {
+  padding: 0 5px 7px;
+}
+
+div.field,
+div.actions {
+  margin-bottom: 10px;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px 7px 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px -7px 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+label {
+  display: block;
+}

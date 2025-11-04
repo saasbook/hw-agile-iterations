@@ -1,0 +1,68 @@
+{
+  "name": "actionmap",
+  "private": "true",
+  "description": "See README.md on project repository",
+  "version": "0.0.1",
+  "main": "babel.config.js",
+  "engines": {
+    "node": "> 20.x"
+  },
+  "dependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@hotwired/turbo-rails": "^8.0.18",
+    "@popperjs/core": "^2.11.8",
+    "autoprefixer": "^10.4.21",
+    "babel-loader": "^10.0.0",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "d3": "^5.16.0",
+    "expose-loader": "^4.0.0",
+    "jquery": "^3.5.1",
+    "nodemon": "^3.1.10",
+    "popper.js": "^1.16.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "sass": "^1.93.2",
+    "select2": "^4.0.13",
+    "timeago": "^1.6.7",
+    "topojson": "^3.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "globals": "^16.4.0",
+    "mapshaper": "^0.5.10",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint \"app/javascript/**/*.js\"",
+    "lint:fix": "./node_modules/.bin/eslint --fix \"app/javascript/**/*.js\"",
+    "build": "webpack --config ./config/webpack/webpack.config.js",
+    "build:css:compile": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --load-path=node_modules",
+    "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
+    "build:css": "npm run build:css:compile && npm run build:css:prefix",
+    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"npm run build:css\"",
+    "postinstall": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts public/"
+  },
+  "keywords": [
+    "CS169",
+    "Software",
+    "Engineering",
+    "ESaaS"
+  ],
+  "author": "CS169 Staff",
+  "license": "ISC",
+  "browserslist": [
+    "defaults"
+  ]
+}

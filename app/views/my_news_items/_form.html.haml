@@ -1,0 +1,65 @@
+= form_for news_item, url: form_url, html: { method: form_method } do |f|
+  - if news_item.errors.any?
+    .alert.alert-danger
+      %h2
+        "#{pluralize(news_item.errors.count, 'error')} prohibited this news from being saved:"
+      %ul
+        - news_item.errors.full_messages.each do |message|
+          %li= message
+  .form-group.row
+    .col-sm-2
+      = label :news_item, :title, 'Title:', class: 'col-form-label'
+    .col-sm-10
+      = text_field :news_item, :title, class:       'form-control',
+                                       placeholder: 'Brief title of article...',
+                                       disabled:    disabled_for_user
+
+  .form-group.row
+    .col-sm-2
+      = label :news_item, :link, 'Link', class: 'col-form-label'
+    .col-sm-10
+      = text_field :news_item, :link, class: 'form-control',
+        placeholder: 'Link to external article...', disabled: disabled_for_user
+  .form-group.row
+    .col-sm-2
+      = label :news_item, :description, class: 'col-form-label'
+    .col-sm-10
+      = text_area :news_item, :description, class: 'form-control',
+        placeholder: 'Describe the contents of the article...', disabled: disabled_for_user
+  .form-group.row
+    .col-sm-2
+      = label :news_item, :representative_id, class: 'col-form-label'
+    .col-sm-10
+      = select :news_item, :representative_id, representatives_list, { include_blank: true },
+               class: 'form-control', disabled: disabled_for_user
+  .form-group.row
+    .col-sm-2
+      = label :news_item, :issue, class: 'col-form-label'
+    .col-sm-10
+      = select :news_item, :issue, NewsItem.issues, { include_blank: true },
+               class: 'form-control', disabled: disabled_for_user
+  .form-group.row
+    .col-sm-2
+    <!-- Padding to align center the ratings-->
+    .col-sm-1
+      = label :news_item, :rating, '1', class: 'form-check-label'
+    .col-sm-1
+      = radio_button :news_item, :rating, '1', class: 'form-check-input'
+    .col-sm-1
+      = label :news_item, :rating, '2', class: 'form-check-label'
+    .col-sm-1
+      = radio_button :news_item, :rating, '2', class: 'form-check-input'
+    .col-sm-1
+      = label :news_item, :rating, '3', class: 'form-check-label'
+    .col-sm-1
+      = radio_button :news_item, :rating, '3', class: 'form-check-input'
+    .col-sm-1
+      = label :news_item, :rating, '4', class: 'form-check-label'
+    .col-sm-1
+      = radio_button :news_item, :rating, '4', class: 'form-check-input'
+    .col-sm-1
+      = label :news_item, :rating, '5', class: 'form-check-label'
+    .col-sm-1
+      = radio_button :news_item, :rating, '5', class: 'form-check-input'
+  .actions
+    = f.submit 'Save', class: 'btn btn-primary'
