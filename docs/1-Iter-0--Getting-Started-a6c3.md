@@ -24,7 +24,7 @@ Here goes.
 The started repo is [`saasbook/hw-agile-iterations`][repo] on GitHub. If you are working individually, or doing the assignment on your own, you should first [make your own copy][template_url], then clone that repo.
 
 [repo]: https://github.com/saasbook/hw-agile-iterations
-[template]: https://github.com/new?template_name=hw-agile-iterations&template_owner=saasbook
+[template_url]: https://github.com/new?template_name=hw-agile-iterations&template_owner=saasbook
 
 e.g.
 
@@ -145,14 +145,17 @@ mise use node@24 # If your node version is < 20
 npm install
 ```
 
-## Run migrations and seed the database
+## Setup and seed the database
 
-The app is almost ready for launch. You need to run database migrations in [db/migrate](../db/migrate) to prepare your local database to store and serve data, and add the seed data to it:
+The app is almost ready for launch. You need to run database migrations in [db/schema.rb](../db/schema.rb) to prepare your local database to store and serve data, and add the seed data to it:
 
 ```shell
-bundle exec rails db:migrate
-bundle exec rails db:seed
+bundle exec rails db:prepare
 ```
+
+Rails' [`db:prepare`][db:prepare] task will create the database if necessary, then apply the `schema.rb` file. This is usually faster and more reliable than rerunning the migrations. It also tries to be helpful and load the seeds file if necessary. Go ahead and inspect [`db/seeds.rb](../db/seeds.rb) to see what data is loaded.
+
+[db:prepare]: https://guides.rubyonrails.org/active_record_migrations.html#preparing-the-database
 
 (Note: what kind of data is in `db:seed`? Do you agree this is a good use of the seed file?)
 
