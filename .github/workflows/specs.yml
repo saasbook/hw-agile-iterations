@@ -62,7 +62,7 @@ jobs:
         if: always()
         with:
           name: screenshots
-          path: ${{ github.workspace }}/tmp/capybara
+          path: ${{ github.workspace }}/tmp/capybara/**/*
           if-no-files-found: ignore
       - name: Keep code coverage reports
         uses: actions/upload-artifact@v5
