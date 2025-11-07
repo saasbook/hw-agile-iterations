@@ -75,6 +75,9 @@ group :development, :test do
   # Handy text output of DB schema
   gem 'annotate'
 
+  # Run the Procfile.dev with `foreman s -f Procfile.dev` or `bin/dev`
+  gem 'foreman'
+
   # Testing utilities
   gem 'cucumber-rails', '>= 3.0.0', require: false
   gem 'capybara', '>= 3.26'
