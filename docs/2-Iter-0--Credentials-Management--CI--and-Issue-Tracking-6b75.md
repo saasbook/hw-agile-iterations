@@ -174,7 +174,7 @@ heroku run rails db:seed
 heroku addons:destroy heroku-postgresql
 
 # Then add a new one
-heroku addons:create heroku-postgresql:mini
+heroku addons:create heroku-postgresql:essential-0
 ```
 
 You should now be able to access your app using the _(appname)_`.herokuapp.com` that you set up in the previous step.

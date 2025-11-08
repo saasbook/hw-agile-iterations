@@ -1,12 +1,14 @@
 # Iteration 2: Choose a feature that uses an external API
 
-In the following parts, ensure you are writing tests and bringing coverage for the `/app` directory to at least 55%.
+## **WARINING:** This page still needs to be updated during Fall 2025
 
-## Iteration 2, Part 1 - add an Issues column to News Articles
+In the following parts, ensure you are writing tests and bringing coverage for ActionMap to at least 75%.
+
+## Iteration 2, Part 1—Add an Issues column to News Articles
 
 The Representatives table is currently associated with many news articles. What we’d like you to do in this section is add a new `"Issue"` column to News Articles to make it more specific.
 
-**TASK 2.1**: Add an Issues attribute to news articles.  An article's issue can be selected when the article is created.
+**TASK 2.1**: Add an Issues attribute to news articles. An article's issue can be selected when the article is created.
 
 For a news article, add an ‘Issue’ column to News Articles to relate an article with a particular issue.
 
@@ -90,7 +92,13 @@ client.get('/bills', { limit: 100 })
 
 The API we've provided returns JSON results, but it's by no means complete. Feel free to adapt the file as needed.
 
-## \[OPTIONAL\] Iteration 2, part 3 - Add Ratings to News Articles
+## Iteration 2, Part 3—Improve Accessibility Testing
+
+TODO.
+
+Same as before, but add _at least_ 2 cucumber scenarious for your features built in this part.
+
+## \[OPTIONAL\] Iteration 2, Part 4—Add Ratings to News Articles
 
 **This section is optional and not required for a full grade on the project.** If your team chooses to implement features discussed in this section, it may make up for small deficiencies in earlier parts of the assignment. You should only proceed to this section, however, if you have completed the other sections as described (e.g. by implementing the requested features and keeping test coverage high).
 

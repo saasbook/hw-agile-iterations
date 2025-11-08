@@ -54,13 +54,15 @@ Now, let's sync the changes and push them to our team's repository. This only ne
 
 ```sh
 cd actionmap
-git checkout -b inital-setup
+git status
+# verify you are on main and it is empty.
+git checkout
 git fetch upstream
-git merge upstream/main
-git push origin initial-setup
+git pull upstream/main
+git push origin main
 ```
 
-Next, go visit GitHub, then open and merge a new pull request.
+_Ideally_, we'd make a separate branch, then a pull request, then merge that branch. However, for the very _first_ commit, whatever branch we push to GitHub becomes the 'default' one.
 
 ## Commit frequently (For future reference)
 
@@ -109,7 +111,7 @@ The Codio stack for this assignment comes with the following already installed, 
 
 Now you can install the gems, and as usual, for local development, we recommend you skip installing `production` dependencies:
 
-```shell
+```sh
 cd actionmap
 bundle config set without production
 bundle install

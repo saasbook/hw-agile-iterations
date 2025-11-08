@@ -14,12 +14,11 @@ Both iterations will follow the same general structure:
 
 5. At end of iteration, the team as a whole submits a _retro_ (retrospective survey), and each developer submits a confidential _peer evaluation survey_ and _self-assessment survey_. The grading of the code and tests is based on your deployed Heroku app and the contents of the team repo.
 
-The rest of this guide details each of the above steps; the next guide lays out the feature tasks for Iteration 1. **Please read this guide completely before going on.**
-
+The rest of this guide details each of the above steps; the next guide lays out the feature tasks for Iteration 1. **Please read this guide and the following page completely before going on.**
 
 ## Pre-iteration Planning
 
-For each iteration we'll give you specs of what to do.  You should think of the project spec as notes from a customer who knows _what_ feature they want but not _how_ to implement it. You should make lo-fi mockups if needed in order to create user stories from the spec.
+For each iteration we'll give you high-level descriptions of what to do. You should think of the project spec as notes from a customer who knows _what_ feature they want but not _how_ to implement it. You should make lo-fi mockups if needed in order to create user stories from the spec.
 
 Your team should have an iteration planning meeting (IPM) to discuss the stories. **A key goal of this meeting is to break down the stories into smaller ones until each story is something that can be finished by one person or a pair of people within about 1 day's work.**  In a full XP workflow, the IPM would include assigning points to stories; in our simplified version we're essentially recommending you make all the stories 1-point stories.
 
