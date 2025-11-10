@@ -125,9 +125,10 @@ If you're not using our prebuilt Codio stack, you'll need to install the [Heroku
 3. Run the following commands to connect your local repo to your heroku app, replacing `<xx>` with your team number:
 
 ```sh
-heroku apps # list the apps you have access to.
-heroku apps:favorites:add -a fa25-<xx>
-heroku git:remote -a fa25-<xx>
+heroku teams
+heroku apps -t esaas # list the apps you have access to.
+heroku apps:favorites:add -a fa25-team-<xx>
+heroku git:remote -a fa25-team-<xx>
 ```
 
 (If you've properly set the stack from an earlier assignment, you may not need to redo the last step.)
