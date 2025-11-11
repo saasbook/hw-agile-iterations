@@ -52,21 +52,24 @@ _OCDID_ is an ['Open Civic Division ID'](https://github.com/opencivicdata/ocd-di
 
 After completing this step, you may want to purge and re-initialize your database (why?), both locally and on Heroku.
 
-Locally:
+Here's a recommended set of actions, but you should make sure you understand what each line does before continuing.
+
+What does `db:prepare` do? Consult the [Rails docs][db_prepare].
+[db_prepare]: https://guides.rubyonrails.org/active_record_migrations.html#setting-up-the-database
 
 ```bash
 bundle exec rails db:drop
-bundle exec rails db:create
-bundle exec rails db:migrate
-bundle exec rails db:seed
+bundle exec rails db:prepare
 ```
 
-On Heroku:
+On Heroku, you may find it easier to simply replace your database instance. Heroku and Rails make it difficult to `drop` an active production database, and for good reason!
+
+**Be sure to communicate with your team before making disruptive data changes on Heroku.**
+
 ```bash
 heroku addons:destroy heroku-postgresql -a <YOUR_APP_NAME>
 heroku addons:create heroku-postgresql -a <YOUR_APP_NAME>
-heroku run rails db:migrate
-heroku run rails db:seed
+heroku run rails db:prepare
 ```
 
 ## Iteration 1, Part 2: Representative's Profile Page

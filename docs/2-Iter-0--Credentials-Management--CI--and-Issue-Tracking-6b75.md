@@ -164,8 +164,7 @@ git push heroku main # you may need --force as well if this is the first push fr
 7. Next, setup the initial database on Heroku:
 
 ```shell
-heroku run rails db:migrate
-heroku run rails db:seed
+heroku run rails db:prepare
 ```
 
 **NOTE:** If you have previously deployed a Rails app to this Heroku container, you will want to remove and recreate the debase.
@@ -175,7 +174,7 @@ heroku run rails db:seed
 heroku addons:destroy heroku-postgresql
 
 # Then add a new one
-heroku addons:create heroku-postgresql:essential-0
+heroku addons:create heroku-postgresql
 ```
 
 You should now be able to access your app using the _(appname)_`.herokuapp.com` that you set up in the previous step.
