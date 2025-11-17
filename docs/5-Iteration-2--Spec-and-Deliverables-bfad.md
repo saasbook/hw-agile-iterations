@@ -1,8 +1,6 @@
 # Iteration 2: Choose a feature that uses an external API
 
-## **WARINING:** This page still needs to be updated during Fall 2025
-
-In the following parts, ensure you are writing tests and bringing coverage for ActionMap to at least 75%.
+In the following parts, ensure you are writing tests and bringing coverage for ActionMap to **at least 75%** (across the `app/` directory).
 
 ## Iteration 2, Part 1—Add an Issues column to News Articles
 
@@ -84,7 +82,7 @@ To get started using the API we need to do a few things:
 * Call and test the API:
 
 ```rb
-API_KEY = Rails.Rails.application[:CONGRESS_GOV_API]
+API_KEY = ENV.fetch("CONGRESS_GOV_API_KEY", Rails.application.credentials.congress_gov_api_key)
 client = Congress::API.new(API_KEY)
 client.get('/bills')
 client.get('/bills', { limit: 100 })
@@ -94,13 +92,49 @@ The API we've provided returns JSON results, but it's by no means complete. Feel
 
 ## Iteration 2, Part 3—Improve Accessibility Testing
 
-TODO.
+ Add accessibility tests for at least two different routes, or two substantially different views of the same route. For this iteration, these should be routes that you have added modified during part of this iteration.
 
-Same as before, but add _at least_ 2 cucumber scenarious for your features built in this part.
+
+1. Open `features/accessibility.feature` and add scenarios for **two** critical user paths. For example:
+
+```cucumber
+Scenario: State map page is accessible
+  Given I am on the state map page for "CA"
+  Then the page should be axe clean
+```
+
+You may pick any two routes you wish. In iteration 2, you'll need to add an additional 2 routes to this file. (These tests will also help contribute to your overall test coverage.)
+
+When we run the step `Then the page should be axe clean`, we audit the HTML of whatever is currently in view in the browser. In this case, consider what happens if expand (or hide) the counties table on the state page. You might get different results!
+
+
+2. Run the accessibility tests:
+```bash
+bundle exec cucumber -p a11y
+```
+
+3. Fix any violations reported by axe. Common issues include:
+  - Missing form labels
+  - Images without alt text
+  - Insufficient color contrast
+  - Missing page landmarks
+
+### Additional Resources and References
+
+If you'd like to more easily test accessibility during development, consider using the following tools and references:
+
+- [axe DevTools Chrome Extension](https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd) - This will run the same axe accessibility tests directly in your browser, and you can use it while developing. Simply install the extension, open the DevTools panel, and select the "axe DevTools" tab.
+- [WebAIM Guidelines](https://webaim.org/) - Comprehensive accessibility documentation
+- [WCAG 2.1 Quick Reference](https://www.w3.org/WAI/WCAG21/quickref/) - A quick reference for the Web Content Accessibility Guidelines (WCAG) 2.1 standards.
+- [ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices/) - Guidelines for using ARIA to enhance web accessibility. You might not need this now, but it's a great resource for future projects.
+
+Same as before, but add _at least_ 2 cucumber scenarious for your features built in this part. Any cucumber scenarios you add here will contribute to your overall test coverage.
 
 ## \[OPTIONAL\] Iteration 2, Part 4—Add Ratings to News Articles
 
-**This section is optional and not required for a full grade on the project.** If your team chooses to implement features discussed in this section, it may make up for small deficiencies in earlier parts of the assignment. You should only proceed to this section, however, if you have completed the other sections as described (e.g. by implementing the requested features and keeping test coverage high).
+_This section is optional and not required for a full grade on the project._
+
+If your team chooses to implement features discussed in this section, it may make up for small deficiencies in earlier parts of the assignment. You should only proceed to this section, however, if you have completed the other sections as described (e.g. by implementing the requested features and keeping test coverage high).
 
 As you were working on the prior tasks, the customer decided they want the app to include a way for users to rate articles.
 
@@ -110,7 +144,9 @@ A rating system is only as useful as the number of people giving a rating. Allow
 
 ## \[OPTIONAL\] Iteration 2, part 4 - Extending Bills Searching: Tracking Bills to Congress Members
 
-**This section is optional and not required for a full grade on the project.** If your team chooses to implement features discussed in this section, it may make up for small deficiencies in earlier parts of the assignment. You should only proceed to this section, however, if you have completed the other sections as described (e.g. by implementing the requested features and keeping test coverage high).
+_This section is optional and not required for a full grade on the project._
+
+If your team chooses to implement features discussed in this section, it may make up for small deficiencies in earlier parts of the assignment. You should only proceed to this section, however, if you have completed the other sections as described (e.g. by implementing the requested features and keeping test coverage high).
 
 This feature will be open-ended. If you wish to complete this feature, you should create GitHub issues / pull requests explaining your design.
 
