@@ -124,7 +124,7 @@ module Congress
 
     def get(path, params={})
       params = params.merge(api_key: @api_key)
-      response = @conn.get(BASE_URL + path) do |req|
+      response = @conn.get("#{BASE_URL}/#{path}") do |req|
         req.params = params
         req.headers['Accept'] = 'application/json'
       end
