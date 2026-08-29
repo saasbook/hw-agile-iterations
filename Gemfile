@@ -5,7 +5,7 @@
 
 source 'https://rubygems.org'
 
-ruby '~> 3.3' # Make sure that this matches .ruby-version file.
+ruby '>= 3.3.8' # Minimum; .ruby-version names the version we build against.
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.2'

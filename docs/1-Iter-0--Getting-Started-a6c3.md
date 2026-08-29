@@ -97,7 +97,7 @@ ActionMap makes use of quite a bit of JavaScript. While you won't be writing muc
 
 The Codio stack for this assignment comes with the following already installed, but if you're not using Codio, you will need to install these yourself:
 
-* nodejs (ideally, version 20 or higher)
+* nodejs (version 22 or higher)
   * `node` is a server-side JavaScript environment.
 * npm
   * `npm` is the package manager for JavaScript (just like `gem` and `bundler`)
@@ -105,7 +105,7 @@ The Codio stack for this assignment comes with the following already installed, 
   * Run commands by running `npm run [command]` (similar to `bundle exec [command]`)
 * mise (https://mise.jdx.dev/walkthrough.html)
   * mise is a tool which makes it very easy to manage different version of programming languages.
-  * `mise use node` to use the latest version, or `mise use node@24` to use a specific version.
+  * `mise use node` to use the latest version, or `mise use node@22` to use a specific version.
 
 ## Install dependencies in your local environment
 
@@ -143,7 +143,7 @@ Next we install the JavaScript libraries used by Node. Node projects have a `pac
 
 ```shell
 node -v
-mise use node@24 # If your node version is < 20
+mise use node@22 # If your node version is < 22
 npm install
 ```
 

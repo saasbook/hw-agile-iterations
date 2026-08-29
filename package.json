@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "main": "babel.config.js",
   "engines": {
-    "node": "> 20.x"
+    "node": ">= 22"
   },
   "dependencies": {
     "@babel/core": "^7.28.5",
