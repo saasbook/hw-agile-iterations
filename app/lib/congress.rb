@@ -84,7 +84,8 @@ module Congress
     end
 
     def bills(congress:, type: 'all', offset: 0, limit: 20)
-      Response.new(self, "bill/#{congress}/#{type}", offset: offset, limit: limit)
+      path = type == 'all' ? "bill/#{congress}" : "bill/#{congress}/#{type}"
+      Response.new(self, path, offset: offset, limit: limit)
     end
 
     def bill_detail(congress:, bill_type:, bill_number:)
