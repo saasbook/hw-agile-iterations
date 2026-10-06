@@ -13,6 +13,7 @@
 
 - [ ] Are there rspec tests? (Or are they not needed? Why?)
 - [ ] Are there cucumber tests? (Or are they not needed? Why?)
+- [ ] Check CI's coverage comment: are the lines this PR changes covered? If some are not, explain why here.
 
 <!-- Add notes about testing -->
 
@@ -29,5 +30,6 @@
 - [ ] Assign someone to review
 - [ ] Tag / link any appropriate GitHub issues.
 - [ ] CI is all Green / Passing
+- [ ] Coverage did not go down (compare "All files" in the coverage comment with `main`)
 - [ ] Resolved all code linter comments, review comments, etc.
 - [ ] Is `main` up to date? Is there rebasing / merging needed?

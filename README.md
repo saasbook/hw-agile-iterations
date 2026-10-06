@@ -50,3 +50,17 @@ git clone git@github.com:saasbook/hw-agile-iterations.git
 If you're working in an environment like Codio, simply follow the embedded instructions.
 
 Otherwise, checkout [`docs/README.md`](./docs/README.md) for instructions.
+
+## Tests and Coverage
+
+```sh
+bundle exec rspec                # unit and controller specs
+bundle exec cucumber             # user-facing scenarios
+bundle exec cucumber -p a11y     # accessibility scenarios
+bin/coverage-report              # summarize the merged coverage report (Markdown)
+bundle exec simplecov open       # browse it line by line (coverage/index.html)
+```
+
+All three runs add to the same coverage report (settings in `.simplecov`).
+On GitHub, the `All Specs` workflow posts the same summary on every pull
+request and uploads the full HTML report as the `coverage` artifact.

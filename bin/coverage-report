@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Summarize test coverage as Markdown, from the report SimpleCov wrote to
+# coverage/ the last time the tests ran.
+#
+#   bin/coverage-report              totals, lowest-coverage files, tests recorded
+#   bin/coverage-report origin/main  ...plus coverage of the lines changed since main
+#
+# CI (.github/workflows/specs.yml) runs this to build the pull request comment
+# and the job summary; run it locally to see the same thing before you push.
+# Everything comes from `bundle exec simplecov <command>`; run
+# `bundle exec simplecov help` for more.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+base="${1:-}"
+input="coverage/coverage.json"
+
+if [ ! -f "$input" ]; then
+  echo "$input not found: run the tests first (bundle exec rspec; bundle exec cucumber; bundle exec cucumber -p a11y)." >&2
+  exit 1
+fi
+
+sc() { bundle exec simplecov "$@" --no-color; }
+
+echo "## Test coverage"
+echo
+# One row per group from `simplecov report --json`, as a Markdown table.
+sc report --json | jq -r '
+  def pct(n): (n * 100 | round) / 100;
+  def row(name; stats): "| \(name) | **\(pct(stats.lines.percent))%** | \(stats.lines.covered) / \(stats.lines.total) |";
+  "| | Line coverage | Covered / relevant lines |",
+  "|---|---:|---:|",
+  row("All files"; .total),
+  (.groups | to_entries[] | select(.value.lines != null) | row(.key; .value))'
+echo
+echo "_Groups follow the app/ layout. lib/, config/, db/ and the tests themselves are not counted (see .simplecov)._"
+echo
+
+if [ -n "$base" ]; then
+  echo "### Lines changed since \`$base\`"
+  echo
+  echo "Only the lines this change added or edited, per file, with the line numbers no test ran."
+  echo
+  echo '```'
+  sc patch --base "$base" || true
+  echo '```'
+  echo
+fi
+
+echo "### Files with the lowest coverage"
+echo
+echo "Percent, covered / relevant lines, file, and the line ranges no test ran. Start here when deciding what to test next."
+echo
+echo '```'
+sc uncovered --top 15 --missing
+echo '```'
+echo
+echo "<details><summary>Report status and tests recorded</summary>"
+echo
+echo '```'
+sc status
+echo '```'
+echo
+echo "</details>"
+echo
+echo "Line-by-line detail: open coverage/index.html (the \`coverage\` artifact on CI, or \`bundle exec simplecov open\` locally)."

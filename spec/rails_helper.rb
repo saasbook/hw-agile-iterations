@@ -1,31 +1,10 @@
 # frozen_string_literal: true
 
-# See: https://github.com/codecov/example-ruby
-
+# Code coverage. The settings are in .simplecov (shared with Cucumber); this
+# block only names the run so the results merge into one report.
 require 'simplecov'
-require 'simplecov_lcov_formatter'
-require 'simplecov-console'
-
-SimpleCov::Formatter::LcovFormatter.config do |c|
-  c.report_with_single_file = true
-  c.lcov_file_name = 'actionmap.info'
-  # c.single_report_path = 'your/path/lcov.info'
-end
-
 SimpleCov.start 'rails' do
   command_name 'rspec'
-
-  ## CS169: You may want to modify some of the testing configuration.
-
-  # This only shows the more verbose console output on GitHub
-  # You may choose to enable it locally.
-  formatters = [
-    SimpleCov::Formatter::LcovFormatter,
-    SimpleCov::Formatter::HTMLFormatter
-  ]
-  formatters << SimpleCov::Formatter::Console if ENV.fetch('CI', nil)
-
-  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(formatters)
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'

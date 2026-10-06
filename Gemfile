@@ -118,12 +118,9 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
 
-  # Report coverage.
-  gem 'codecov', require: false
-  gem 'simplecov', require: false
-  gem 'simplecov-console', require: false
-  gem "simplecov-json", require: false
-  gem 'simplecov_lcov_formatter', require: false
+  # Code coverage. Settings are in .simplecov; the gem also provides the
+  # `bundle exec simplecov` command line tool (see bin/coverage-report).
+  gem 'simplecov', '~> 1.2.0', require: false
 end
 
 group :development do

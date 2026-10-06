@@ -1,38 +1,34 @@
 name: All Specs
 
-# workflow_dispatch allows you to manually trigger this workflow.
+# Runs on every pull request and on every push to the default branch.
+# You can also start it by hand: Actions -> All Specs -> Run workflow.
 on:
-  - push
-  - pull_request
-  - workflow_dispatch
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+# A newer push to the same branch cancels the run still in progress.
+concurrency:
+  group: specs-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # TODO: Environment variables?
   build:
-    # Don't create two builds on open PRs
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    runs-on: ubuntu-latest
     permissions:
-      # To comment on PRs
-      pull-requests: write
-      # To retrieve test step time in GitHub Action
       contents: read
-      # To retrieve previous report for default branch, which is saved as GitHub Action Artifacts
-      actions: read
-    runs-on: '${{ matrix.os }}'
-    continue-on-error: true
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
+      pull-requests: write # to post the coverage comment
     env:
       RAILS_ENV: test
       RUBY_ENV: test
       DISPLAY: ':99' # For chromedriver
       # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      # REDIS_URL: redis://localhost:6379/0
 
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # full history, so patch coverage can diff against the base branch
 
       - uses: actions/setup-node@v6
         with:
@@ -45,31 +41,55 @@ jobs:
       - run: bundle exec rails db:setup
       - name: Precompile CSS and JavaScript
         run: bundle exec rails assets:precompile
-      - name: Rspec Tests
+
+      # The three test runs each add to the same coverage report (see .simplecov).
+      # Later steps still run when an earlier one fails, so coverage is always reported.
+      - name: RSpec
         run: bundle exec rspec
       - name: Cucumber
+        if: ${{ !cancelled() }}
         run: bundle exec cucumber
-      - name: Accessibility Features
+      - name: Accessibility (cucumber -p a11y)
+        if: ${{ !cancelled() }}
+        continue-on-error: true # reported, but does not fail the build
         run: bundle exec cucumber --profile a11y
-      - name: Code Coverage Reports
-        uses: k1LoW/octocov-action@v1
-      # This is a similar coverage commenter, but is less reliable.
-      - name: Add code coverage comment
-        uses: romeovs/lcov-reporter-action@master
-        with:
-          lcov-file: ./coverage/lcov/actionmap.lcov
-          github-token: ${{ github.token }}
+
+      # bin/coverage-report wraps `bundle exec simplecov ...`; the same
+      # Markdown goes to the job summary and to the pull request comment.
+      - name: Coverage summary
+        if: ${{ !cancelled() }}
+        env:
+          BASE: ${{ github.base_ref }} # empty unless this is a pull request
+        run: |
+          bin/coverage-report ${BASE:+origin/$BASE} | tee coverage/summary.md >> "$GITHUB_STEP_SUMMARY"
+          bundle exec simplecov badge --output coverage/badge.svg
+      - name: Comment on the pull request
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" \
+            --body-file coverage/summary.md --edit-last --create-if-none \
+            || echo "::notice::Could not post the coverage comment (read-only token?). See the job summary instead."
+      - name: Annotate uncovered lines in this change
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        run: |
+          # ::warning annotations show up inline on the "Files changed" tab (GitHub shows at most 10 per step).
+          bundle exec simplecov patch --base "origin/${{ github.base_ref }}" --json \
+            | jq -r '.[] | .file as $f | .line.missing[] | "::warning file=\($f),line=\(.)::Not covered by any test"' \
+            | head -n 10
+
       - name: Keep screenshots from integration tests
         uses: actions/upload-artifact@v5
         if: always()
         with:
           name: screenshots
-          path: ${{ github.workspace }}/tmp/capybara/**/*
+          path: tmp/capybara/
           if-no-files-found: ignore
-      - name: Keep code coverage reports
+      - name: Keep the coverage report
         uses: actions/upload-artifact@v5
-        if: success()
+        if: ${{ !cancelled() }}
         with:
           name: coverage
-          path: ${{ github.workspace }}/coverage/
+          path: coverage/
           if-no-files-found: ignore
