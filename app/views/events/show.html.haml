@@ -38,6 +38,12 @@
           %i.fas.fa-pencil
           Edit
 
+        = link_to edit_my_event_path(@event),
+                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' },
+                  class: 'mx-1 btn btn-danger' do
+          %i.fas.fa-trash
+          Delete
+
         = link_to events_path, class: 'mx-1 btn btn-info' do
           %i.fas.fa-list
-          View all articles
+          View all events

@@ -50,9 +50,8 @@
                     %i.fas.fa-pen &nbsp;Edit
 
                 %td
-                  = link_to(representative_news_item_path(item.representative.id, item.id),
-                            method:   :delete,
-                            data:     { confirm: 'Are you sure?' },
+                  = link_to(representative_edit_my_news_item_path(item.representative.id, item.id),
+                            data:     { turbo_method: :delete, turbo_confirm: 'Are you sure?' },
                             disabled: @curr_user_id != item.creator_id,
-                            class:   'btn btn-danger') do
+                            class:    'btn btn-danger') do
                     %i.fas.fa-trash &nbsp;Delete

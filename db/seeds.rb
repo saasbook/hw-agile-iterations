@@ -10,18 +10,16 @@
 
 require_relative 'seed_data'
 
-State.destroy_all
-County.destroy_all
+if State.none?
+  SeedData.states.each do |state_data|
+    state = State.find_or_create_by!(state_data)
 
-SeedData.states.each do |state|
-  state = State.find_or_create_by!(state)
-
-  # state = State.find_by(symbol: state[:symbol])
-  county_filename = "lib/assets/counties_fips_data/#{state[:symbol].downcase}.json"
-  Rails.root.join(county_filename).open('r:UTF-8') do |f|
-    state.counties = JSON.parse(f.read, object_class: County)
+    county_filename = "lib/assets/counties_fips_data/#{state.symbol.downcase}.json"
+    Rails.root.join(county_filename).open('r:UTF-8') do |f|
+      state.counties = JSON.parse(f.read, object_class: County)
+    end
+    state.save
   end
-  state.save
 end
 
 # Ensure we only run these seeds in the development environment.

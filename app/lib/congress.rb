@@ -84,7 +84,8 @@ module Congress
     end
 
     def bills(congress:, type: 'all', offset: 0, limit: 20)
-      Response.new(self, "bill/#{congress}/#{type}", offset: offset, limit: limit)
+      path = type == 'all' ? "bill/#{congress}" : "bill/#{congress}/#{type}"
+      Response.new(self, path, offset: offset, limit: limit)
     end
 
     def bill_detail(congress:, bill_type:, bill_number:)
@@ -123,7 +124,7 @@ module Congress
 
     def get(path, params={})
       params = params.merge(api_key: @api_key)
-      response = @conn.get(BASE_URL + path) do |req|
+      response = @conn.get("#{BASE_URL}/#{path}") do |req|
         req.params = params
         req.headers['Accept'] = 'application/json'
       end

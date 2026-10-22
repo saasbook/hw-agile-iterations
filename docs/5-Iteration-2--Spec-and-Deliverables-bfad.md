@@ -41,14 +41,14 @@ Here is the [Google feed for News API.](https://newsapi.org/s/google-news-api)
 
 ### Option 2: Congress.gov API
 
-In this task you will explore adding an functionality to search congress.gov for various bills. Take a look at [api.congress.giv](https://api.congress.gov) and `lib/congress-api.rb`. There is a [very helpful GitHub repository](https://github.com/LibraryOfCongress/api.congress.gov/blob/main/Documentation/BillEndpoint.md) for the API.
+In this task you will explore adding an functionality to search congress.gov for various bills. Take a look at [api.congress.gov](https://api.congress.gov) and `app/lib/congress.rb`. There is a [very helpful GitHub repository](https://github.com/LibraryOfCongress/api.congress.gov/blob/main/Documentation/BillEndpoint.md) for the API.
 
 
 Before you begin, you'll need to sign up for an API key. Save the credentials in your app as `CONGRESS_GOV_API_KEY`. (Review iteration 1.)
 
 * **TASK 2.2**: Scaffold a model, view, and controller for a `bill`. A bill should have the following attributes:
   * `title` (a string)
-  * `congress` (an integer, currently 118)
+  * `congress` (an integer, currently 119)
   * `number` (an integer)
   * `original_chamber` (house or senate)
   * `type` (text, see the API documentation for the available bill types)
@@ -72,20 +72,24 @@ Before you begin, you'll need to sign up for an API key. Save the credentials in
 
 ### Getting Started with the API
 
-We have provided a very simple wrapper for the congress.gov API inside `lib/congress-api.rb`
+We have provided a very simple wrapper for the congress.gov API inside `app/lib/congress.rb`.
 To get started using the API we need to do a few things:
 
-* Add `gem 'faraday_middleware'` to the Gemfile and reinstall all dependencies.
-* Create a space to call the API, in that file you will need to use `require_relative '../lib/congress-api'`
-  * **Note:** You'll need to make sure this base is correctly updated relative to whatever file you are using.
-  * Typically you include this line right at the top, outside of an `class` definitions.
-* Call and test the API:
+* The wrapper lives under `app/`, so Rails autoloads it. `Congress::Client` is available anywhere in the
+  app (including `rails console`) with no `require` needed.
+* The gems it needs (`faraday`, `faraday-follow_redirects`, `json`) are already in the Gemfile.
+* Call and test the API. Note that paths are relative to the API's base URL, so they do **not**
+  start with a `/`:
 
 ```rb
 API_KEY = ENV.fetch("CONGRESS_GOV_API_KEY", Rails.application.credentials.congress_gov_api_key)
-client = Congress::API.new(API_KEY)
-client.get('/bills')
-client.get('/bills', { limit: 100 })
+client = Congress::Client.new(API_KEY)
+client.get('bill')
+client.get('bill', { limit: 100 })
+
+# The wrapper also has helpers for the endpoints you'll need, e.g.:
+client.bills(congress: 119).get
+client.bills(congress: 119, type: 'hr').get
 ```
 
 The API we've provided returns JSON results, but it's by no means complete. Feel free to adapt the file as needed.
@@ -142,7 +146,7 @@ As you were working on the prior tasks, the customer decided they want the app t
 
 A rating system is only as useful as the number of people giving a rating. Allow users to give an individual rating to an article and display the average rating for each article.
 
-## \[OPTIONAL\] Iteration 2, part 4 - Extending Bills Searching: Tracking Bills to Congress Members
+## \[OPTIONAL\] Iteration 2, Part 5—Extending Bills Searching: Tracking Bills to Congress Members
 
 _This section is optional and not required for a full grade on the project._
 
