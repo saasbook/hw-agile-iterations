@@ -2,6 +2,8 @@
 
 # CHIP 10.5: Agile Iterations
 
+> **Note:** In CS169A Fall 2026 you should be using the Fall 2026 updates: <https://cs169.org/chips/10.5-2026/>
+
 Welcome to CHIP 10.5!
 
 The goal of this assignment is to experience a small-scale version of real agile software development as it is typically practiced in industry. In particular:
