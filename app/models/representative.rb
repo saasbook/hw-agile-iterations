@@ -18,7 +18,7 @@ class Representative < ApplicationRecord
   # https://www.geocod.io/docs/#congressional-districts
   def self.geocodio_search(query)
     geocodio_api_key = ENV.fetch('GEOCODIO_API_KEY', Rails.application.credentials.geocodio_api_key)
-    raise ArgumentError 'Missing GEOCODIO_API_KEY' if geocodio_api_key.blank?
+    raise ArgumentError, 'Missing GEOCODIO_API_KEY' if geocodio_api_key.blank?
 
     geocodio = Geocodio::Gem.new(geocodio_api_key)
     geocodio.geocode(query, ['cd'])
@@ -50,6 +50,7 @@ class Representative < ApplicationRecord
     rep = Representative.create({ name: official['name'], ocdid: ocdid,
       title: title, party: official['party'], photo_url: official['photo_url'] })
     rep.save
+    rep
   end
 
   def update_from_geocodio(official)
